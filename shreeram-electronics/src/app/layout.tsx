@@ -16,8 +16,20 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
   title: "Shreeram Electronics – Online Electronic Store",
   description: "Shop smartphones, laptops, TVs, audio and more at Shreeram Electronics.",
+  openGraph: {
+    title: "Shreeram Electronics – Online Electronic Store",
+    description: "Shop smartphones, laptops, TVs, audio and more at Shreeram Electronics.",
+    type: "website",
+    url: "/",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Shreeram Electronics",
+    description: "Electronics at great prices",
+  },
 };
 
 export default function RootLayout({
