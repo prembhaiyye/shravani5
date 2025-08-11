@@ -1,22 +1,23 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { products } from "@/src/data/products";
 import ProductCard from "@/src/components/ProductCard";
+import { useCatalog } from "@/src/contexts/CatalogContext";
 
 export default function ProductCatalogClient() {
   const [query, setQuery] = useState("");
+  const { visibleProducts } = useCatalog();
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return products;
-    return products.filter((p) =>
+    if (!q) return visibleProducts;
+    return visibleProducts.filter((p) =>
       [p.name, p.description, ...(p.tags || []), ...(p.specs || [])]
         .join(" ")
         .toLowerCase()
         .includes(q)
     );
-  }, [query]);
+  }, [query, visibleProducts]);
 
   return (
     <div className="space-y-4">

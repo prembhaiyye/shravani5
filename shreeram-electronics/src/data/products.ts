@@ -7,6 +7,7 @@ export type Product = {
   image?: string | null;
   specs?: string[];
   tags?: string[];
+  isCustom?: boolean;
 };
 
 export const products: Product[] = [
