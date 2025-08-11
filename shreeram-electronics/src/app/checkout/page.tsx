@@ -18,10 +18,30 @@ export default function CheckoutPage() {
     payment: "COD",
   });
 
-  const placeOrder = (e: React.FormEvent) => {
+  const placeOrder = async (e: React.FormEvent) => {
     e.preventDefault();
     if (products.length === 0) return;
     const orderId = `SR-${Math.random().toString(36).slice(2, 8).toUpperCase()}`;
+
+    try {
+      await fetch("/api/notify-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          orderId,
+          amount: subtotal,
+          customer: form,
+          items: products.map(({ product, quantity }) => ({
+            name: product.name,
+            quantity,
+            priceInr: product.priceInr,
+          })),
+        }),
+      });
+    } catch (err) {
+      console.error("Failed to notify order", err);
+    }
+
     clear();
     router.push(`/order-success?orderId=${orderId}&amount=${subtotal}`);
   };
